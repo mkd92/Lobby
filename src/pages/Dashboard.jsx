@@ -12,5 +12,5 @@ export default function Dashboard() {
     }
   }, [navigate, userData]);
 
-  return <div>Dashboard</div>;
+  return <div>welcome {userData.username}</div>;
 }
