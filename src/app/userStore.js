@@ -1,5 +1,6 @@
 import create from "zustand";
 import { devtools, persist } from "zustand/middleware";
+import api from "../services/api";
 
 const userStore = (set) => ({
   userData: {
@@ -19,12 +20,9 @@ const userStore = (set) => ({
     }));
   },
   logout: () => {
+    api.post("/auth/logout/");
     set((state) => ({
-      userData: {
-        token: null,
-        user_id: null,
-        username: null,
-      },
+      userData: {},
     }));
   },
 });

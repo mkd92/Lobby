@@ -13,5 +13,11 @@ const updateLocalAccessToken = (token, exp) => {
   };
   window.localStorage.setItem("userData", JSON.stringify(data));
 };
+const destroyToken = () => {
+  document.cookie =
+    // eslint-disable-next-line no-useless-concat
+    "refresh_token" + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+  window.localStorage.clear();
+};
 
-module.exports = { getLocalAccessToken, updateLocalAccessToken };
+module.exports = { getLocalAccessToken, updateLocalAccessToken, destroyToken };

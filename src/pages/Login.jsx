@@ -15,7 +15,15 @@ export default function Login() {
   const addUser = userStore((state) => state.addUser);
   const navigate = useNavigate();
   const onSubmit = (data) => {
-    axios.post("http://127.0.0.1:5000/auth/login", data).then((res) => {
+    axios({
+      method: "post",
+      url: "http://192.168.29.112:5000/auth/login",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+      data,
+    }).then((res) => {
       //TODO: handle error 400
       // console.log(res.status);
       if (res.status === 200) {
@@ -23,7 +31,7 @@ export default function Login() {
         const authString = "Bearer ".concat(token);
         addToken(authString, res.data.expires);
         axios
-          .get("http://127.0.0.1:5000/properties/user", {
+          .get("http://192.168.29.112:5000/properties/user", {
             headers: { Authorization: authString },
           })
           .then((res1) => {
@@ -37,7 +45,7 @@ export default function Login() {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="px-8 py-6 mx-4 mt-4 text-left bg-white shadow-lg md:w-1/3 lg:w-1/3 sm:w-1/3">
         <h3 className="text-2xl font-bold text-center">Login</h3>
-        <form className=" " onSubmit={handleSubmit(onSubmit)}>
+        <form className="" onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label htmlFor="username" className="block">
               Username
