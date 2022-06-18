@@ -1,5 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 
+import UnitSelector from "./components/unitSelector/UnitSelector";
+
 import Dashboard from "./pages/Dashboard";
 
 import Login from "./pages/Login";
@@ -18,7 +20,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="/dashboard/:prop_id" element={<UnitSelector />} />
+        </Route>
       </Routes>
     </div>
   );

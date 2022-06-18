@@ -1,5 +1,6 @@
 import create from "zustand";
 import { devtools } from "zustand/middleware";
+import api from "../services/api";
 
 const ownerStore = (set) => ({
   ownerData: {},
@@ -11,6 +12,13 @@ const ownerStore = (set) => ({
         ...data,
       },
     }));
+  },
+  reloadData: () => {
+    api.get("http://192.168.29.112:5000/properties/").then(({ data }) => {
+      set((state) => ({
+        ownerData: data,
+      }));
+    });
   },
 });
 

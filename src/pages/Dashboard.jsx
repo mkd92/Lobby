@@ -2,6 +2,7 @@
 // import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 
 import userStore from "../app/userStore";
 // import refreshTheToken from "../helpers/refreshTheToken";
@@ -46,12 +47,13 @@ export default function Dashboard() {
       return (
         <div className="flex w-screen">
           {ownerData.properties.map((property, i) => (
-            <button
+            <Link
               key={i}
+              to={`/dashboard/${property._id}`}
               className="px-4 py-2 mx-4 my-2 text-white bg-teal-600"
             >
               {property.prop_name}
-            </button>
+            </Link>
           ))}
           <button
             className="px-4 py-2 mx-4 my-2 text-white bg-teal-600"
@@ -65,5 +67,10 @@ export default function Dashboard() {
     }
   };
 
-  return <div className="">{ren()}</div>;
+  return (
+    <div className="">
+      {ren()}
+      <Outlet />
+    </div>
+  );
 }
