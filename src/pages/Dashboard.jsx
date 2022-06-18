@@ -10,11 +10,12 @@ import userStore from "../app/userStore";
 import api from "../services/api";
 import ownerStore from "../app/ownerStore";
 import AddPropertyModel from "../components/model/AddPropertyModel";
+import AddUnitModel from "../components/model/AddUnitModel";
 
 export default function Dashboard() {
   const userData = userStore((state) => state.userData);
   const ownerData = ownerStore((state) => state.ownerData);
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const updateOwnerData = ownerStore((state) => state.updateOwnerData);
 
   const navigate = useNavigate();

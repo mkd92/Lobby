@@ -1,5 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 
+import Transactions from "./components/transactions/Transactions";
+
 import UnitSelector from "./components/unitSelector/UnitSelector";
 
 import Dashboard from "./pages/Dashboard";
@@ -21,7 +23,12 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />}>
-          <Route path="/dashboard/:prop_id" element={<UnitSelector />} />
+          <Route path="/dashboard/:prop_id" element={<UnitSelector />}>
+            <Route
+              path="/dashboard/:prop_id/:unit_id"
+              element={<Transactions />}
+            />
+          </Route>
         </Route>
       </Routes>
     </div>
