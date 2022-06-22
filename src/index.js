@@ -1,18 +1,29 @@
 import React from "react";
 
-import { BrowserRouter } from "react-router-dom";
+import { CssBaseline } from "@mui/material";
 
+import { createTheme } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
+import { BrowserRouter } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+// import { ThemeProvider } from "@material-ui/styles";
+// import CssBaseline from "@material-ui/core/CssBaseline";
+// import { createTheme } from "@material-ui/core/styles";
+const theme = createTheme();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </ThemeProvider>
   // </React.StrictMode>
 );
 

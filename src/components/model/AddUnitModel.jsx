@@ -1,5 +1,5 @@
 import React from "react";
-import AddPropertyForm from "../forms/AddPropertyForm";
+// import AddPropertyForm from "../forms/AddPropertyForm";
 import AddUnitForm from "../forms/AddUnitForm";
 
 export default function AddUnitModel({ showModal, setShowModal, prop_id }) {

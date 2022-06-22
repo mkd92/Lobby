@@ -3,6 +3,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Outlet, Link } from "react-router-dom";
+import { Typography } from "@mui/material";
+import { Box } from "@mui/material";
+import { Button } from "@mui/material";
 
 import userStore from "../app/userStore";
 // import refreshTheToken from "../helpers/refreshTheToken";
@@ -10,7 +13,7 @@ import userStore from "../app/userStore";
 import api from "../services/api";
 import ownerStore from "../app/ownerStore";
 import AddPropertyModel from "../components/model/AddPropertyModel";
-import AddUnitModel from "../components/model/AddUnitModel";
+// import AddUnitModel from "../components/model/AddUnitModel";
 
 export default function Dashboard() {
   const userData = userStore((state) => state.userData);
@@ -46,24 +49,32 @@ export default function Dashboard() {
   const ren = () => {
     if (ownerData.properties) {
       return (
-        <div className="flex w-screen">
+        <Box
+          component="div"
+          sx={{ overflow: "auto", marginY: "1rem", marginX: "1rem" }}
+        >
+          <Typography variant="h6" sx={{ marginX: "1rem" }}>
+            Property List
+          </Typography>
           {ownerData.properties.map((property, i) => (
-            <Link
-              key={i}
-              to={`/dashboard/${property._id}`}
-              className="px-4 py-2 mx-4 my-2 text-white bg-teal-600"
+            <Button
+              variant="outlined"
+              sx={{ marginX: "1rem", marginY: "1rem" }}
             >
-              {property.prop_name}
-            </Link>
+              <Link key={i} to={`/dashboard/${property._id}`}>
+                {property.prop_name}
+              </Link>
+            </Button>
           ))}
-          <button
-            className="px-4 py-2 mx-4 my-2 text-white bg-teal-600"
+          <Button
+            variant="outlined"
+            sx={{ marginX: "1rem" }}
             onClick={onClickHandler}
           >
             ADD Property
-          </button>
+          </Button>
           <AddPropertyModel showModal={showModal} setShowModal={setShowModal} />
-        </div>
+        </Box>
       );
     }
   };
@@ -71,6 +82,7 @@ export default function Dashboard() {
   return (
     <div className="">
       {ren()}
+      {/* <Typography>MAni</Typography> */}
       <Outlet />
     </div>
   );

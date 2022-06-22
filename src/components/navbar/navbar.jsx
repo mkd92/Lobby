@@ -1,42 +1,96 @@
-import React from "react";
+import * as React from "react";
 import { Link } from "react-router-dom";
-import userStore from "../../app/userStore";
+// import axios from "axios";
+import { Tooltip } from "@mui/material";
+import { IconButton } from "@mui/material";
+import { Menu } from "@mui/material";
+import { MenuItem } from "@mui/material";
 
-export default function navbar() {
+import userStore from "../../app/userStore";
+import AppBar from "@mui/material/AppBar";
+import Avatar from "@mui/material/Avatar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import HouseSidingIcon from "@mui/icons-material/HouseSiding";
+import PersonIcon from "@mui/icons-material/Person";
+import { Box } from "@mui/material";
+
+export default function Navbar() {
   const userData = userStore((state) => state.userData);
   const logout = userStore((state) => state.logout);
+  // const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
   return (
-    <div className="flex items-center justify-between flex-wrap bg-teal-500 p-6">
-      <Link to="/">
-        <button className="font-semibold text-xl tracking-tight text-white">
-          Lobby
-        </button>
-      </Link>
-      {userData.user_id ? (
-        <div className="flex items-center justify-between w-1/5">
-          <button
-            onClick={logout}
-            className="inline-block text-sm px-4 py-2 leading-none border rounded text-white hover:border-transparent hover:text-teal-500 hover:bg-white  lg:mt-0"
-          >
-            Logout
-          </button>
-        </div>
-      ) : (
-        <div className="flex items-center justify-between w-1/5">
-          <Link
-            to="/login"
-            className="inline-block text-sm px-4 py-2 leading-none border rounded text-white hover:border-transparent hover:text-teal-500 hover:bg-white  lg:mt-0"
-          >
-            Login
-          </Link>
-          <Link
-            to="/signup"
-            className="inline-block text-sm px-4 py-2 leading-none border rounded text-white hover:border-transparent hover:text-teal-500 hover:bg-white  lg:mt-0"
-          >
-            Signup
-          </Link>
-        </div>
-      )}
-    </div>
+    <AppBar position="sticky" color="primary" component="nav">
+      <Container maxWidth="xl">
+        <Toolbar>
+          <HouseSidingIcon
+            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+          />
+          <Typography href="/" component="a" variant="h6">
+            Lobby
+          </Typography>
+          <Box sx={{ flexGrow: 1 }}></Box>
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open Setting">
+              <IconButton sx={{ p: 0 }} onClick={handleOpenUserMenu}>
+                {userData.username ? (
+                  <Avatar
+                    src={`https://avatars.dicebear.com/api/initials/${userData.username}.svg`}
+                    alt="Sprite"
+                  />
+                ) : (
+                  <PersonIcon />
+                )}
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: "45px" }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {userData.user_id ? (
+                <MenuItem>
+                  <Typography textAlign="center">
+                    <button onClick={logout}>Logout</button>
+                  </Typography>
+                </MenuItem>
+              ) : (
+                <>
+                  <MenuItem>
+                    <Typography textAlign="center">
+                      <Link to="/login">Login</Link>
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem>
+                    <Typography textAlign="center">
+                      <Link to="/signup">Signup</Link>
+                    </Typography>
+                  </MenuItem>
+                </>
+              )}
+            </Menu>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 }

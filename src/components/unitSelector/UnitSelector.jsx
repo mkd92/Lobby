@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, Outlet } from "react-router-dom";
-import api from "../../services/api";
+import { Box, Button } from "@mui/material";
+import { Typography } from "@mui/material";
+
+// import api from "../../services/api";
 import unitStore from "../../app/unitStore";
 import AddUnitModel from "../model/AddUnitModel";
 
@@ -19,29 +22,28 @@ export default function UnitSelector() {
   }, [params.prop_id, reloadData]);
 
   return (
-    <div>
+    <Box
+      component="div"
+      sx={{ overflow: "auto", marginY: "1rem", marginX: "1rem" }}
+    >
+      <Typography variant="h6" sx={{ marginX: "1rem" }}>
+        Unit List
+      </Typography>
       {unitData &&
         unitData.map((unit, i) => (
-          <Link
-            key={i}
-            to={`/dashboard/${params.prop_id}/${unit._id}`}
-            className="px-4 py-2 mx-4 my-2 text-white bg-teal-600"
-          >
-            {unit.unit_name}
-          </Link>
+          <Button variant="outlined" sx={{ marginX: "1rem", marginY: "1rem" }}>
+            <Link key={i} to={`/dashboard/${params.prop_id}/${unit._id}`}>
+              {unit.unit_name}
+            </Link>
+          </Button>
         ))}
-      <button
-        className="px-4 py-2 mx-4 my-2 text-white bg-teal-600"
-        onClick={onClickHandler}
-      >
-        Add Unit
-      </button>
+      <Button onClick={onClickHandler}>Add Unit</Button>
       <AddUnitModel
         showModal={showModal}
         setShowModal={setShowModal}
         prop_id={params.prop_id}
       />
       <Outlet />
-    </div>
+    </Box>
   );
 }
